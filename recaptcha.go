@@ -28,14 +28,13 @@ func CheckResponse(response string) bool {
 	jsonErr := decoder.Decode(&r)
 	if jsonErr != nil {
 		fmt.Printf("Couldnt decode http response into JSON")
-	} else {
-		if len(r.errorCodes) > 0 {
-			fmt.Printf("Received error codes from google api :")
-			for _, v := range r.errorCodes {
-				fmt.Printf(v)
-			}
-		}
-		return r.success
+		return false
 	}
-	return false
+	if len(r.errorCodes) > 0 {
+		fmt.Printf("Received error codes from google api :")
+		for _, v := range r.errorCodes {
+			fmt.Printf(v)
+		}
+	}
+	return r.success
 }
